@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>USER PAGE</title>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <h4 th:text="${authUser.getUsername()} + '  With Roles:  ' +  ${authUser.getStringRole()}" class="navbar-brand">USER</h4>
+        <a href="/logout">
+            <button type="button" class="btn btn-secondary">logout</button>
+        </a>
+    </div>
+</nav>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="position-sticky pt-3">
+                <ul class="nav nav-pills flex-column">
+                    <li style="display: block" id="btn_admin" class="nav-item">
+                        <a class="nav-link " aria-current="page" href="/admin">
+                            ADMIN
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active " href="/user">
+                            USER
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">USER INFORMATION PAGE </h1>
+            </div>
+            <div>
+                <h2>ABOUT USER</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Age</th>
+                            <th>Email</th>
+                            <th>Role</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th><p th:text="${authUser.getId()}"></p></th>
+                            <th><p th:text="${authUser.getName()}"></p></th>
+                            <th><p th:text="${authUser.getSurName()}"></p></th>
+                            <th><p th:text="${authUser.getAge()}"></th>
+                            <th><p th:text="${authUser.getUsername()}"></p></th>
+                            <th>
+                                <div th:each="role : ${authUser.getRole()}">
+                                    <p id="role_field" th:text="${role.name.toString()}"></p>
+                                </div>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</div>
+
+</body>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"></script>
+<script>
+    if (document.getElementById("role_field").textContent.includes("ROLE_ADMIN")) {
+        document.getElementById("btn_admin").style.display = "block"
+    } else {
+        document.getElementById("btn_admin").style.display = "none"
+    }
+</script>
+<script src="../static/adminJS.js"></script>
+</html>
